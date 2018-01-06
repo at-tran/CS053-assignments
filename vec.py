@@ -15,10 +15,7 @@ def getitem(v,k):
     0
     """
     assert k in v.D
-    if k not in v.f.keys():
-        return 0
-    else:
-        return v.f[k]
+    return v.f.get(k, 0)
 
 def setitem(v,k,val):
     """
@@ -74,10 +71,7 @@ def equal(u,v):
     False
     """
     assert u.D == v.D
-    for k in u.D:
-        if u[k] != v[k]:
-            return False
-    return True
+    return False not in [u[k] == v[k] for k in u.D]
 
 def add(u,v):
     """
@@ -115,13 +109,9 @@ def add(u,v):
     >>> Vec({0, 1},{0: 1, 1: 200}) - Vec({0, 1},{0: 1}) == Vec({0, 1},{1: 200})
     True
     """
-    assert u.D == v.D
-    res = Vec(u.D, {})
-    keys = set(u.f.keys())
-    keys.update(v.f.keys())
-    for k in keys:
-        res[k] = u[k] + v[k]
-    return res
+    assert u.D == v.D   
+    keys = set(u.f.keys()) | set(v.f.keys())
+    return Vec(u.D, {k:u[k] + v[k] for k in keys})
 
 def dot(u,v):
     """
@@ -155,12 +145,8 @@ def dot(u,v):
     12
     """
     assert u.D == v.D
-    keys = set(u.f.keys())
-    keys.update(v.f.keys())
-    res = 0
-    for k in keys:
-        res += u[k] * v[k]
-    return res
+    keys = set(u.f.keys()) | set(v.f.keys())
+    return sum(u[k] * v[k] for k in keys)
     
 
 def scalar_mul(v, alpha):
@@ -181,10 +167,7 @@ def scalar_mul(v, alpha):
     >>> u == Vec({'x','y','z','w'},{'x':1,'y':2,'z':3,'w':4})
     True
     """
-    res = Vec(v.D, {})
-    for k in v.f.keys():
-        res[k] = v[k] * alpha
-    return res
+    return Vec(v.D, {k:v[k]*alpha for k in v.f.keys()})
 
 def neg(v):
     """
