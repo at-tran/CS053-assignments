@@ -139,5 +139,8 @@ def exchange(S, A, z):
         >>> exchange(S, A, z) in [list2vec([0, 0, one, one]), list2vec([0, one, one, 0])]
         True
     '''
-    pass
-
+    S = list(S)
+    sol = solve(coldict2mat(S), z)
+    for i in sol.D:
+        if sol[i] != 0 and S[i] not in A:
+            return S[i]
