@@ -5,7 +5,7 @@ from The_Basis_problems import is_superfluous, vec2rep
 from vecutil import list2vec
 from GF2 import one
 from solver import solve
-from matutil import listlist2mat, coldict2mat
+from matutil import listlist2mat, coldict2mat, mat2coldict, identity
 from mat import Mat
 from vec import Vec
 
@@ -211,7 +211,7 @@ def is_invertible(M):
     >>> is_invertible(M1)
     False
     '''
-    pass
+    return (M.D[0] == M.D[1]) and my_is_independent(mat2coldict(M))
 
 
 ## 10: (Problem 6.7.13) Inverse of a Matrix over GF(2)
@@ -226,7 +226,11 @@ def find_matrix_inverse(A):
         >>> find_matrix_inverse(M1) == Mat(M1.D, {(0, 1): one, (1, 0): one, (2, 2): one})
         True
     '''
-    pass
+    coldict = {}
+    identity_mat = mat2coldict(identity(A.D[0], one))
+    for col_label in A.D[0]:
+        coldict[col_label] = solve(A, identity_mat[col_label])
+    return coldict2mat(coldict)
 
 
 ## 11: (Problem 6.7.14) Inverse of a Triangular Matrix
