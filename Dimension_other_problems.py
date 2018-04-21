@@ -1,9 +1,8 @@
 # version code 9f73479f460b+
 # Please fill out this stencil and submit using the provided submission script.
 from GF2 import one
-from The_Basis_problems import is_independent
+from The_Basis_other_problems import is_superfluous
 from matutil import coldict2mat
-from vecutil import list2vec
 from solver import solve
 
 ## 1: () Exchange Lemma in Python
@@ -93,10 +92,10 @@ def subset_basis(T):
         >>> subset_basis({c0,c1,c2,c3,c4}) == {c0,c1,c2,c4}
         True
     '''
-    res = set()
-    for v in T:
-        if is_independent(list(res | {v})):
-            res.add(v)
+    res = T
+    for v in T.copy():
+        if is_superfluous(res, v):
+            res.remove(v)
     return res
 
 
