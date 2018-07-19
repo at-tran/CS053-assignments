@@ -5,6 +5,8 @@ from mat import Mat
 from vec import Vec
 from vecutil import list2vec
 from math import sqrt
+from matutil import listlist2mat
+from math import sqrt
 
 
 ## 1: (Problem 11.8.1) Procedure for computing squared Frobenius norm
@@ -59,13 +61,20 @@ VC = Mat(({'c1', 'c2'}, {0}), {('c2', 0): 1})
 # In both parts, your matrices must use 0, 1, 2, ... , n as the indices.
 
 # Part 1
-G1 = ...
-H1 = ...
+G1 = listlist2mat([[0, -sqrt(2)],
+                   [2, 0],
+                   [0, -sqrt(2)],
+                   [1, 0]])
+H1 = listlist2mat([[0, 1, 0],
+                   [-sqrt(0.5), 0, -sqrt(0.5)]])
 
 # Part 2
-G2 = ...
-H2 = ...
-
+G2 = listlist2mat([[1, 0],
+                   [1, 0],
+                   [0, 0],
+                   [0, -1]])
+H2 = listlist2mat([[0, 0, 1],
+                   [0, -1, 0]])
 
 ## 6: (Problem 11.8.7) Writing SVD_solve
 def SVD_solve(U, Sigma, V, b):
